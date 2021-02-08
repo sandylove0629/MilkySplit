@@ -3,8 +3,9 @@ import "./assets/css/style.scss"
 import Header from "./Header";
 import Split from "./pages/Split";
 import Footer from "./Footer";
+// import Login from "./pages/Login";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
-
+// import { authContext } from ""
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,7 @@ function App() {
             <Route path="/split/:group_id"><Split/></Route>
             <Route path="/summary/:group_id"><Split/></Route>
             <Route path="/:group_id"><Split/></Route>
+            {/* <Route path="/"><Login/></Route> */}
           </Switch>
         </main>
         <Footer/>
