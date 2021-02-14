@@ -3,26 +3,31 @@ import "./assets/css/style.scss"
 import Header from "./Header";
 import Split from "./pages/Split";
 import Footer from "./Footer";
-// import Login from "./pages/Login";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
-// import { authContext } from ""
+import Login from "./pages/Login";
+import { BrowserRouter, Switch, Route, Link, withRouter } from "react-router-dom"
+import { UserProvider } from "./Context"
+import CreateSplit from "./pages/CreateSplit";
 function App() {
+  const FooterWithRouter = withRouter(Footer)
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header />
-        <main className="d-flex justify-content-center overflow-hidden">
-          <Switch>
-            <Route path="/users/:group_id" exact>User</Route>
-            <Route path="/user/:userId">SingleUser</Route>
-            <Route path="/split/:group_id"><Split/></Route>
-            <Route path="/summary/:group_id"><Split/></Route>
-            <Route path="/:group_id"><Split/></Route>
-            {/* <Route path="/"><Login/></Route> */}
-          </Switch>
-        </main>
-        <Footer/>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Header />
+          <main className="d-flex justify-content-center overflow-hidden">
+            <Switch>
+              <Route path="/users/:groupId" exact>User</Route>
+              <Route path="/user/:userId">SingleUser</Route>
+              <Route path="/split/:groupId"><Split/></Route>
+              <Route path="/createSplit/:groupId"><CreateSplit/></Route>
+              <Route path="/summary/:groupId"><Split/></Route>
+              <Route path="/:groupId"><Split/></Route>
+              <Route path="/"><Login/></Route>
+            </Switch>
+          </main>
+          <FooterWithRouter/>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }

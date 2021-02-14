@@ -37,6 +37,10 @@ ul {
   color: $primary !important;
 }
 
+.text-danger {
+  color: $danger !important;
+}
+
 .text-info {
   color: $info !important;
 }
@@ -45,12 +49,23 @@ ul {
   color: $light-gray;
 }
 
+.text-12 {
+  font-size: 12px;
+}
+.text-18 {
+  font-size: 18px;
+}
+
 .pb-100 {
   padding-bottom: 100px;
 }
 
 .t-4 {
   top: 4px
+}
+
+.t-5 {
+  top: 5px
 }
 
 .overflow-scroll {
@@ -101,13 +116,25 @@ ul {
 
 .icon-add {
   z-index: 1;
-  right: 5px;
+  right: 10px;
   bottom: 20px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: $primary;
   i {
-    font-size: 40px;
+    font-size: 35px;
+    font-weight: bold;
+  }
+}
+
+.icon-add-item {
+  right: 0px;
+  bottom: -15px;
+  width: 30px;
+  height: 30px;
+  background-color: $primary;
+  i {
+    font-size: 20px;
     font-weight: bold;
   }
 }
@@ -118,7 +145,7 @@ ul {
   padding: 12px 60px;
   font-size: 18px;
   border-radius: 30px;
-  background-color: $secondary;
+  background-color: $secondary !important;
   color: #ffffff;
   &:hover {
     color: #ffffff;
@@ -166,6 +193,97 @@ ul {
   }
 }
 
+.input-frame {
+  &.focus {
+    box-shadow: 0 0 0 0.15rem rgba( $primary, .25);
+  }
+  p {
+    font-size: 12px;
+  }
+  input {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    line-height: 18px;
+    height: auto;
+  }
+  input::placeholder {
+    color: #E5E5E5;
+  }
+  input:focus {
+    box-shadow: none;
+  }
+  div {
+    // box-shadow: none;
+  }
+}
+
+// checkbox
+.checkbox-block {
+  p {
+    margin-left: 35px;
+    top: 3px
+  }
+  input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 5px;
+  }
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  input:checked ~ .checkmark {
+    background-color: $primary;
+    &:after {
+      display: block;
+    }
+  }
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+hr.filled {
+  margin-left: -1.5rem !important;
+  width: calc(100% + 3rem);
+}
+
+.alert {
+  border-radius: 0;
+  border: none;
+  height: 60px;
+  font-size: 18px;
+  line-height: 35px;
+  text-align: center;
+  &.alert-success {
+    background-color: #556b70;
+    color: #ffffff;
+  }
+}
+
 // main
 .absolute {
   position: absolute;
@@ -185,11 +303,18 @@ header {
   top: 25px;
 }
 
+.icon-logout {
+  right: 25px;
+  top: 25px;
+  i {
+    font-size: 18px;
+  }
+}
+
 // content
 main {
   height: calc(100vh - 150px);
   overflow: scroll;
-  padding: 1.5rem 1.5rem 0 1.5rem;
 }
 
 .card-list {
@@ -218,6 +343,27 @@ main {
   font-size: 24px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+}
+
+.tab-block {
+  div {
+    padding: 15px;
+    background-color: $light-gray;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  div:active,
+  div.active
+   {
+    background-color: $primary;
+  }
+  div:first-child {
+    border-radius: 30px 0 0 30px;
+  }
+  div:last-child {
+    border-radius: 0 30px 30px 0;
+  }
 }
 
 // footer

@@ -1,14 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SummaryCard from "../components/SummaryBlock"
-import List from "../components/List";
+import List from "../components/split/_list";
 import Button from "../components/Button"
 import Modal from "../components/Modal"
-import { listTest } from "../assets/json/test"
+import { useParams, useHistory } from "react-router-dom"
+import { getGroupApi } from "../api/axiosApi"
+import Loading from '../components/Loading';
 
 const Split = () => {
-  const [amount, setAmount] = useState(300)
-  const [splitList, setSplitList] = useState(listTest) // 分帳列表
+  const [splitList, setSplitList] = useState([]) // 分帳列表
   const [modalShow, setModalShow] = useState(false)
+  const [groupInfo, setGroupInfo] = useState({})
+  const params = useParams()
+  const history = useHistory()
+
+  useEffect(() => {
+    getGroup()
+  }, [])
+
+  const getGroup = () => {
+    const groupId = params.groupId
+    getGroupApi(groupId)
+      .then(res => {
+        const fields = res.data.fields
+        console.log(fields)
+        setGroupInfo(fields)
+
+        // 建立分帳列表
+        let list = []
+        for (let i = 0; i < fields.users.length; i++) {
+          list = [
+            ...list,
+            {
+              userId: fields.users[i],
+              id: fields.users[i],
+              name: fields.usersName[i],
+              total: fields.usersTotal[i],
+              payPrice: fields.usersPayPrice[i],
+              splitPrice:fields.usersSplitPrice[i]
+            }
+          ]
+        }
+        setSplitList(list)
+      }) 
+      .catch(err => {
+
+      })
+  }
 
   const toggleModal = (mShow) => {
     setModalShow(mShow)
@@ -20,16 +58,34 @@ const Split = () => {
       <div 
         className="absolute rounded-circle text-white icon-add
         d-flex flex-wrap justify-content-center align-content-center"
+        onClick={ () => history.push(`/createSplit/${params.groupId}`)  }
       >
         <i className="material-icons">add</i>
       </div>
-      <div className="w-100 h-100 overflow-scroll pb-100">
-        { !splitList.length && SplitEmpty() }
-        { splitList.length && (<div><SummaryCard amount={amount}/><List list={splitList}/></div>) }
-        <div className="text-center pt-4">
-          <Button name="清空資料" type="danger" event={() => toggleModal(!modalShow)}></Button>
-        </div>
-      </div>
+      {/* 列表 */}
+      {
+        groupInfo.id ? (
+          <div className="w-100 h-100 overflow-scroll p-4 pb-100">
+            { !splitList.length && SplitEmpty() }
+            { splitList.length ? (
+              <div>
+                <div>
+                  {/* 花費總額 */}
+                  <SummaryCard amount={groupInfo.groupPayTotal}/>
+                  {/* 明細 */}
+                  <List list={splitList} type={1}/>
+                </div>
+                <div className="text-center pt-4">
+                  <Button name="清空資料" type="danger" event={() => toggleModal(!modalShow)}></Button>
+                </div>
+              </div>
+              ) : ""
+            }
+          </div>
+        ) : (
+          <Loading/>
+        )
+      }
       {/* Modal */}
       <Modal event={toggleModal} mShow={modalShow} options={{persistent: false}}>
         <p>確定清空資料 ?</p>
