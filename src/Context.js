@@ -23,17 +23,26 @@ const Context = createContext({
   group: "",
   setGroupValue: () => {},
   fetchCreateGroup: () => {},
-  getGroup: () => {}
+  getGroup: () => {},
+  // header title
+  headerTitle: "不想努力分帳了",
+  setHeaderTitle: () => {}
 })
 
 export const UserProvider = ({ children }) => {
   const [accountContextValue, setAccountContextValue] = useState({})
   const [groupContextValue, setGroupContextValue] = useState({})
+  const [headerTitleContextValue, setHeaderTitleContextValue] = useState("不想努力分帳了")
   return (
     <Context.Provider
       value={{
         account: accountContextValue,
         group: groupContextValue,
+        headerTitle: headerTitleContextValue,
+        setHeaderTitle: text => {
+          if (!text) text = "不想努力分帳了"
+          setHeaderTitleContextValue(text)
+        },
         setAccountValue: account => {
           setAccountContextValue(account)
         },

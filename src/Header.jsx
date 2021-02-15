@@ -4,7 +4,7 @@ import Context from "./Context"
 
 const Header = () => {
   const history = useHistory()
-  const { account: accountValue, setAccountValue, setGroupValue }  = useContext(Context)
+  const { account: accountValue, setAccountValue, setGroupValue, headerTitle }  = useContext(Context)
   const doLogout = () => {
     localStorage.removeItem("split_account")
     localStorage.removeItem("split_group")
@@ -26,7 +26,7 @@ const Header = () => {
       <div className="absolute icon-back">
         <i className="material-icons">navigate_before</i>
       </div>
-      <h1>不想努力分帳了</h1>
+      <h1>{headerTitle ? headerTitle : "不想努力分帳了"}</h1>
       {
         accountValue.id && (
           <div className="absolute icon-logout" onClick={doLogout}>

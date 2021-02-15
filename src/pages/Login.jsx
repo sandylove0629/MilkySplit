@@ -88,7 +88,7 @@ const Login = () => {
     const groupBody = {
       fields: {
         id,
-        name: id,
+        name: "不想努力分帳了",
         owner: [accountId]
       }
     }
@@ -96,7 +96,7 @@ const Login = () => {
       .then(res => {
         console.log(res)
         // 跳頁
-        routeSplitPage()
+        routeUserPage()
       })
       .catch(err => {
         console.log(err)
@@ -119,6 +119,12 @@ const Login = () => {
     const sGroup = localStorage.getItem("split_group")
     const id = sGroup ? JSON.parse(sGroup).id : group.id
     history.push(`split/${id}`)
+  }
+  
+  const routeUserPage = () => {
+    const sGroup = localStorage.getItem("split_group")
+    const id = sGroup ? JSON.parse(sGroup).id : group.id
+    history.push(`users/${id}`)
   }
 
   return (

@@ -2,6 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/css/style.scss"
 import Header from "./Header";
 import Split from "./pages/Split";
+import SplitUser from "./pages/SplitUser"
+import Users from "./pages/Users"
+import CreateUser from "./pages/CreateUser"
 import Footer from "./Footer";
 import Login from "./pages/Login";
 import { BrowserRouter, Switch, Route, Link, withRouter } from "react-router-dom"
@@ -16,8 +19,9 @@ function App() {
           <Header />
           <main className="d-flex justify-content-center overflow-hidden">
             <Switch>
-              <Route path="/users/:groupId" exact>User</Route>
-              <Route path="/user/:userId">SingleUser</Route>
+              <Route path="/users/:groupId" exact><Users/></Route>
+              <Route path="/createUser/:groupId"><CreateUser/></Route>
+              <Route path="/splitUser/:groupId/:userId/" exact><SplitUser/></Route>
               <Route path="/split/:groupId"><Split/></Route>
               <Route path="/createSplit/:groupId"><CreateSplit/></Route>
               <Route path="/summary/:groupId"><Split/></Route>

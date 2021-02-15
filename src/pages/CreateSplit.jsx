@@ -3,7 +3,7 @@ import Input from "../components/Input"
 import Select from "../components/Select"
 import Checkbox from "../components/Checkbox"
 import Button from "../components/Button"
-import { getUserApi, createSplitApi } from "../api/axiosApi" 
+import { getUsersApi, createSplitApi } from "../api/axiosApi" 
 import { randomNum } from "../assets/js/random"
 import { useHistory, useParams } from 'react-router-dom';
 import Alert from '../components/Alert';
@@ -101,7 +101,7 @@ const CreateSplit = () => {
     const sGroupId = localStorage.getItem("split_group")
     if (sGroupId) {
       const id = JSON.parse(sGroupId).fields.id
-      getUserApi(id)
+      getUsersApi(id)
         .then(res => {
           res.data.records.map((user) => {
             users = [

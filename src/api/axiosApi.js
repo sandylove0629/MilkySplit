@@ -28,8 +28,20 @@ export const getGroupApi = id => {
   return instance.get(`${baseUrl}/group/${id}`)
 }
 
-export const getUserApi = groupId => {
+export const getUsersApi = groupId => {
   return instance.get(`${baseUrl}/user?view=Grid view&filterByFormula=({group}='${groupId}')`)
+}
+
+export const getUserApi = userId => {
+  return instance.get(`${baseUrl}/user/${userId}`)
+}
+
+export const createUserApi = body => {
+  return instance.post(`${baseUrl}/user`, body)
+}
+
+export const deleteUsersApi = params => {
+  return instance.delete(`${baseUrl}/user?${params}`)
 }
 
 export const createSplitApi = body => {

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react"
   }
 */
 
-const Modal = ({ title, btnName, mShow, event, options = {}, children }) => {
+const Modal = ({ title, btnName, mShow, event, options = {}, children, confirm }) => {
   const [modalShow, setModalShow] = useState(false)
 
   // 外層傳進來
@@ -18,6 +18,10 @@ const Modal = ({ title, btnName, mShow, event, options = {}, children }) => {
   useEffect(() => {
     event(modalShow)
   }, [modalShow])
+
+  const doConfirm = () => {
+    if (confirm) confirm()
+  }
 
   return (
     <div className={`modal${modalShow ? " show" : ""}`}>
@@ -35,7 +39,7 @@ const Modal = ({ title, btnName, mShow, event, options = {}, children }) => {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn-default btn-cancel cell" onClick={() => setModalShow(false)}>取消</button>
-            <button type="button" className="btn btn-default cell ml-3">{btnName || "確定"}</button>
+            <button type="button" className="btn btn-default cell ml-3" onClick={() => doConfirm()}>{btnName || "確定"}</button>
           </div>
         </div>
       </div>
