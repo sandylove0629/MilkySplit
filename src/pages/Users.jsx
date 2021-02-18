@@ -91,7 +91,7 @@ const Split = () => {
       {/* 新增按鈕 */}
       <div 
         className="absolute rounded-circle text-white icon-add
-        d-flex flex-wrap justify-content-center align-content-center"
+        d-flex flex-wrap justify-content-center align-items-center"
         onClick={ () => history.push(`/createUser/${params.groupId}`)  }
       >
         <i className="material-icons">add</i>
@@ -134,7 +134,7 @@ const Split = () => {
 
 const SplitEmpty = () => {
   return (
-    <div className="d-flex h-100 justify-content-center align-content-center flex-wrap">
+    <div className="d-flex h-100 justify-content-center align-items-center flex-wrap">
       <div className="text-center text-disabled">
         <i className="material-icons xs-90">pets</i>
         <br/>

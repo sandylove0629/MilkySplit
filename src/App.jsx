@@ -7,7 +7,8 @@ import Users from "./pages/Users"
 import CreateUser from "./pages/CreateUser"
 import Footer from "./Footer";
 import Login from "./pages/Login";
-import { BrowserRouter, Switch, Route, Link, withRouter } from "react-router-dom"
+import Summary from "./pages/Summary";
+import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom"
 import { UserProvider } from "./Context"
 import CreateSplit from "./pages/CreateSplit";
 function App() {
@@ -19,14 +20,13 @@ function App() {
           <Header />
           <main className="d-flex justify-content-center overflow-hidden">
             <Switch>
-              <Route path="/users/:groupId" exact><Users/></Route>
-              <Route path="/createUser/:groupId"><CreateUser/></Route>
-              <Route path="/splitUser/:groupId/:userId/" exact><SplitUser/></Route>
-              <Route path="/split/:groupId"><Split/></Route>
-              <Route path="/createSplit/:groupId"><CreateSplit/></Route>
-              <Route path="/summary/:groupId"><Split/></Route>
-              <Route path="/:groupId"><Split/></Route>
-              <Route path="/"><Login/></Route>
+              <Route name="users" path="/users/:groupId" exact><Users/></Route>
+              <Route name="createUser" path="/createUser/:groupId"><CreateUser/></Route>
+              <Route name="splitUser" path="/splitUser/:groupId/:userId/" exact><SplitUser/></Route>
+              <Route name="split" path="/split/:groupId"><Split/></Route>
+              <Route name="createSplit" path="/createSplit/:groupId"><CreateSplit/></Route>
+              <Route name="summary" path="/summary/:groupId"><Summary/></Route>
+              <Route name="home" path="/"><Login/></Route>
             </Switch>
           </main>
           <FooterWithRouter/>
