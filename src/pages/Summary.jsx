@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Alert from "../components/Alert"
 import SummaryCard from "../components/SummaryBlock"
-import List from "../components/split/_list";
+import List from "../components/summary/_list";
 import Button from "../components/Button"
 import Modal from "../components/Modal"
 import { useParams, useHistory } from "react-router-dom"
 import { getGroupApi, deleteSplitsApi } from "../api/axiosApi"
 import Loading from '../components/Loading';
+import Context from "../Context"
 
 const Split = () => {
+  const [summaryList, setSummaryList] = useState([])
   const [splitList, setSplitList] = useState([]) // 分帳列表
   const [modalShow, setModalShow] = useState(false)
   const [groupInfo, setGroupInfo] = useState({})
@@ -19,15 +21,22 @@ const Split = () => {
     type: "",
     text: ""
   })
+  const { setHeaderTitle } = useContext(Context)
 
   useEffect(() => {
+    setHeaderTitle("報告")
     getGroup()
+    return () => setHeaderTitle()
   }, [])
+
+  useEffect(() => {
+    coculateSummary()
+  }, [splitList])
 
   const getGroup = () => {
     const groupId = params.groupId
     getGroupApi(groupId)
-      .then(res => {
+      .then(async (res) => {
         const fields = res.data.fields
         console.log(fields)
         setGroupInfo(fields)
@@ -41,9 +50,7 @@ const Split = () => {
               userId: fields.users[i],
               id: fields.users[i],
               name: fields.usersName[i],
-              total: fields.usersTotal[i],
-              payPrice: fields.usersPayPrice[i],
-              splitPrice: fields.usersSplitPrice[i]
+              total: Math.ceil(fields.usersTotal[i]),
             }
           ]
         }
@@ -52,6 +59,49 @@ const Split = () => {
       .catch(err => {
 
       })
+  }
+
+  const coculateSummary = () => {
+    const sSplitList = splitList.sort((a, b) => b.total - a.total)
+    const receiveUsers = sSplitList.filter(user => user.total > 0)
+    const payUsers = sSplitList.filter(user => user.total < 0)
+    let result = []
+    console.log(sSplitList)
+    for (let i = 0; i < receiveUsers.length; i++) {
+      const receiveUser = receiveUsers[i]
+      for (let j = 0; j < payUsers.length; j++) {
+        const payUser = payUsers[j]
+        const payUserTotal = Math.abs(payUser.total)
+        if (!payUserTotal) continue // 算過了
+        if (!receiveUser.total) continue // 算過了
+        if (receiveUser.total > payUserTotal) {
+          result = [
+            ...result,
+            {
+              receiveUser: receiveUser.name,
+              payUser: payUser.name,
+              money: payUserTotal
+            }
+          ]
+          receiveUser.total = receiveUser.total - payUserTotal
+          payUser.total = 0
+        } 
+        else if (receiveUser.total < payUserTotal) {
+          result = [
+            ...result,
+            {
+              receiveUser: receiveUser.name,
+              payUser: payUser.name,
+              money: receiveUser.total
+            }
+          ]
+          receiveUser.total = payUserTotal - receiveUser.total
+          payUser.total = receiveUser.total
+        }
+      }
+    }
+    setSummaryList(result)
+    console.log(result)
   }
 
   const toggleModal = (mShow) => {
@@ -111,14 +161,6 @@ const Split = () => {
 
   return (
     <div className={`w-100 overflow-hidden ${!splitList.length ? "d-flex justify-content-center" : ""}`}>
-      {/* 新增按鈕 */}
-      <div 
-        className="absolute rounded-circle text-white icon-add
-        d-flex flex-wrap justify-content-center align-items-center"
-        onClick={ () => checkUsers() }
-      >
-        <i className="material-icons">add</i>
-      </div>
       {/* 列表 */}
       {
         groupInfo.id && !loadingState ? (
@@ -127,13 +169,8 @@ const Split = () => {
             { splitList.length ? (
               <div>
                 <div>
-                  {/* 花費總額 */}
-                  { !groupInfo.groupPayTotal ? "" : <SummaryCard amount={parseFloat(groupInfo.groupPayTotal.toFixed(2))}/>}
                   {/* 明細 */}
-                  <List list={splitList} type={1}/>
-                </div>
-                <div className="text-center pt-4">
-                  <Button name="清空資料" type="danger" event={() => toggleModal(!modalShow)}></Button>
+                  <List list={summaryList} type={1}/>
                 </div>
               </div>
               ) : ""
@@ -143,21 +180,6 @@ const Split = () => {
           <Loading/>
         )
       }
-      {/* Modal */}
-      <Modal event={toggleModal} 
-        mShow={modalShow} 
-        options={{persistent: false}}
-        confirm={deleteSplits}
-      >
-        <p>確定清空資料 ?</p>
-      </Modal>
-      <Modal event={toggleUsersModal} 
-        mShow={usersModalShow} 
-        options={{persistent: false}} 
-        confirm={() => history.push(`/users/${params.groupId}`)}
-      >
-        <p>請先加入夥伴</p>
-      </Modal>
       {/* Alert */}
       {
         !showAlert.text ? "" : (

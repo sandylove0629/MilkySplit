@@ -7,7 +7,7 @@ const List = ({ list, type, amount }) => {
   */
   return (
     <div className="card-list w-100">
-      { list.length && (
+      { !list.length ? "" : (
         <ul>
           <li>
               {
@@ -15,7 +15,7 @@ const List = ({ list, type, amount }) => {
                   <div className="py-3 px-4 d-flex justify-content-between bg-light">
                     <p>
                       <i className="material-icons t-5 pr-2">outbox</i>
-                      支付
+                      花費
                     </p>
                     { amount && <p>{parseFloat(amount.toFixed(2))}</p> }
                   </div>
@@ -23,7 +23,7 @@ const List = ({ list, type, amount }) => {
                   <div className="py-3 px-4 d-flex justify-content-between bg-light">
                     <p>
                       <i className="material-icons t-5 pr-2">move_to_inbox</i>
-                      收帳
+                      受益
                     </p>
                     { amount && <p>{parseFloat(amount.toFixed(2))}</p> }
                   </div>
