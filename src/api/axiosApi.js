@@ -47,3 +47,7 @@ export const deleteUsersApi = params => {
 export const createSplitApi = body => {
   return instance.post(`${baseUrl}/split`, body)
 }
+
+export const deleteSplitsApi = params => {
+  return instance.delete(`${baseUrl}/split?${params}`)
+}

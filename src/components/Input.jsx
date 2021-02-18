@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 const Input = ({ option, value, error, handleChange }) => {
   const { title, placeholder, type, key, required } = option;
   const [focus, setFocus] = useState(false)

@@ -11,17 +11,17 @@ const Footer = () => {
   }
 
   return (
-    <footer className="d-flex justify-content-around align-content-center flex-wrap">
-      <div className="d-flex align-content-center flex-wrap" onClick={() => params && routeTo("/editGroup")}>
+    <footer className="d-flex justify-content-around align-items-center flex-wrap fixed-bottom">
+      <div className="d-flex align-items-center flex-wrap cursor-pointer" onClick={() => params && routeTo("/editGroup")}>
         <i className={`material-icons ${useRouteMatch("/editGroup/:groupId") && "text-primary"}`}>brush</i>
       </div>
-      <div className="d-flex align-content-center flex-wrap" onClick={() => params && routeTo("/users")}>
+      <div className="d-flex align-items-center flex-wrap cursor-pointer" onClick={() => params && routeTo("/users")}>
         <i className={`material-icons ${useRouteMatch("/users/:groupId") && "text-primary"}`}>face</i>
       </div>
-      <div className="d-flex align-content-center flex-wrap" onClick={() => params && routeTo("/split")}>
+      <div className="d-flex align-items-center flex-wrap cursor-pointer" onClick={() => params && routeTo("/split")}>
         <i className={`material-icons ${useRouteMatch("/split/:groupId") && "text-primary"}`}>poll</i>
       </div>
-      <div className="d-flex align-content-center flex-wrap" onClick={() => params && routeTo("/summary")}>
+      <div className="d-flex align-items-center flex-wrap cursor-pointer" onClick={() => params && routeTo("/summary")}>
         <i className={`material-icons ${useRouteMatch("/summary/:groupId") && "text-primary"}`}>assignment</i>
       </div>
     </footer>

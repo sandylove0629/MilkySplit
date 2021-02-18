@@ -22,8 +22,11 @@ const Header = () => {
   }, [])
 
   return (
-    <header className="d-flex justify-content-center align-content-center flex-wrap">
-      <div className="absolute icon-back">
+    <header className="d-flex justify-content-center align-items-center flex-wrap">
+      {
+        
+      }
+      <div className="absolute icon-back" onClick={() => history.goBack()}>
         <i className="material-icons">navigate_before</i>
       </div>
       <h1>{headerTitle ? headerTitle : "不想努力分帳了"}</h1>

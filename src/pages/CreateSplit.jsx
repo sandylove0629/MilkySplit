@@ -425,7 +425,7 @@ const CreateSplit = () => {
                     {/* 新增項目按鈕 */}
                     <div 
                       className="absolute rounded-circle text-white icon-add-item
-                      d-flex flex-wrap justify-content-center align-content-center"
+                      d-flex flex-wrap justify-content-center align-items-center"
                       onClick={addItem}
                     >
                       <i className="material-icons">add</i>
