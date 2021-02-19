@@ -1,26 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Alert from "../components/Alert"
-import SummaryCard from "../components/SummaryBlock"
 import List from "../components/summary/_list";
-import Button from "../components/Button"
-import Modal from "../components/Modal"
-import { useParams, useHistory } from "react-router-dom"
-import { getGroupApi, deleteSplitsApi } from "../api/axiosApi"
+import { useParams } from "react-router-dom"
+import { getGroupApi } from "../api/axiosApi"
 import Loading from '../components/Loading';
 import Context from "../Context"
 
 const Split = () => {
   const [summaryList, setSummaryList] = useState([])
   const [splitList, setSplitList] = useState([]) // 分帳列表
-  const [modalShow, setModalShow] = useState(false)
   const [groupInfo, setGroupInfo] = useState({})
-  const [loadingState, setLoadingState] = useState(false)
+  const [loadingState, setLoadingState] = useState(true)
   const params = useParams()
-  const history = useHistory()
-  const [showAlert, setShowAlert] = useState({
-    type: "",
-    text: ""
-  })
   const { setHeaderTitle } = useContext(Context)
 
   useEffect(() => {
@@ -38,7 +28,7 @@ const Split = () => {
     getGroupApi(groupId)
       .then(async (res) => {
         const fields = res.data.fields
-        console.log(fields)
+        // console.log(fields)
         setGroupInfo(fields)
 
         // 建立分帳列表
@@ -53,10 +43,8 @@ const Split = () => {
               total: fields.usersTotal[i] >= 0 ? Math.ceil(fields.usersTotal[i]) : Math.floor(fields.usersTotal[i])
             }
           ]
-          console.log(fields.usersTotal[i] >= 0 ? Math.ceil(fields.usersTotal[i]) : Math.floor(fields.usersTotal[i]))
         }
         setSplitList(list)
-        console.log(JSON.stringify(list))
       }) 
       .catch(err => {
 
@@ -68,7 +56,6 @@ const Split = () => {
     const receiveUsers = sSplitList.filter(user => user.total > 0)
     const payUsers = sSplitList.filter(user => user.total < 0)
     let result = []
-    console.log(sSplitList)
     for (let i = 0; i < receiveUsers.length; i++) {
       const receiveUser = receiveUsers[i]
       for (let j = 0; j < payUsers.length; j++) {
@@ -103,7 +90,7 @@ const Split = () => {
       }
     }
     setSummaryList(result)
-    console.log(result)
+    setLoadingState(false)
   }
 
   return (
@@ -125,12 +112,6 @@ const Split = () => {
           </div>
         ) : (
           <Loading/>
-        )
-      }
-      {/* Alert */}
-      {
-        !showAlert.text ? "" : (
-          <Alert type={showAlert.type} text={showAlert.text}></Alert>
         )
       }
     </div>

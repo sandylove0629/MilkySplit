@@ -35,7 +35,6 @@ const Split = () => {
       const id = JSON.parse(sGroupId).fields.id
       getUsersApi(id)
         .then(res => {
-          console.log(res.data)
           res.data.records.map((user) => {
             users = [
               ...users,

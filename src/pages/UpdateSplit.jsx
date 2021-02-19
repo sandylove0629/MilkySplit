@@ -13,7 +13,6 @@ import Modal from "../components/Modal"
 const UpdateSplit = () => {
   const params = useParams()
   const history = useHistory()
-  const [tab, setTab] = useState("single")
   const [showAlert, setShowAlert] = useState({
     type: "",
     text: ""
@@ -36,11 +35,6 @@ const UpdateSplit = () => {
     serviceCharge: false
   })
 
-  // Select
-  const styles = {
-    control: css => ({ ...css, paddingLeft: '1rem' })
-  }
-
   const handleChange = (value, key) => {
     setSplitInfo({
       ...splitInfo,
@@ -60,10 +54,8 @@ const UpdateSplit = () => {
       ...error,
       [key]: false
     })
-    console.log(splitInfo)
   }
   const handleCheck = (value, key) => {
-    console.log(value)
     setSplitInfo({
       ...splitInfo,
       [key]: value
@@ -79,7 +71,7 @@ const UpdateSplit = () => {
       const id = JSON.parse(sGroupId).fields.id
       getUsersApi(id)
         .then(res => {
-          res.data.records.map((user) => {
+          res.data.records.map(user => {
             users = [
               ...users,
               {
@@ -87,6 +79,7 @@ const UpdateSplit = () => {
                 label: user.fields.name
               }
             ]
+            return user
           })
           // set default
           setUserList(users)
@@ -131,7 +124,6 @@ const UpdateSplit = () => {
           }
         }
       }
-      console.log(key, key === 'hasServiceCharge', !splitInfo.serviceCharge)
       if (key === 'hasServiceCharge') {
         if (!splitInfo.serviceCharge) {
           isError = true
@@ -166,7 +158,6 @@ const UpdateSplit = () => {
           }
         }
       }
-      console.log(newErr)
     }
 
     setError(newErr)
@@ -177,7 +168,6 @@ const UpdateSplit = () => {
     const id = params.splitId
     getSplitApi(id)
       .then(res => {
-        console.log(res.data.fields)
         const fields = res.data.fields
         setSplitInfo({
           title: fields.title,
@@ -218,7 +208,6 @@ const UpdateSplit = () => {
     }
 
     records.splice(0, 0, {fields: fields})
-    console.log(records)
 
     setLoadingState(true)
     updateSplitApi(params.splitId, {fields})

@@ -12,7 +12,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="fixed-bottom">
+    <footer className={`fixed-bottom ${!params.page ? 'd-none' : ''}`}>
       {
         !params.page ? "" : (
           <div className="d-flex justify-content-around align-items-center flex-wrap">

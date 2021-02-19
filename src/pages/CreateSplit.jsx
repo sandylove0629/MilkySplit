@@ -36,11 +36,6 @@ const CreateSplit = () => {
     itemList: []
   })
 
-  // Select
-  const styles = {
-    control: css => ({ ...css, paddingLeft: '1rem' })
-  }
-
   const handleChange = (value, key, index) => {
     if (typeof index !== "undefined") {
       let newItemList = [...itemList]
@@ -84,10 +79,10 @@ const CreateSplit = () => {
       ...error,
       [key]: false
     })
-    console.log(splitInfo)
+    // console.log(splitInfo)
   }
   const handleCheck = (value, key) => {
-    console.log(value)
+    // console.log(value)
     setSplitInfo({
       ...splitInfo,
       [key]: value
@@ -103,7 +98,7 @@ const CreateSplit = () => {
       const id = JSON.parse(sGroupId).fields.id
       getUsersApi(id)
         .then(res => {
-          res.data.records.map((user) => {
+          res.data.records.map(user => {
             users = [
               ...users,
               {
@@ -111,6 +106,7 @@ const CreateSplit = () => {
                 label: user.fields.name
               }
             ]
+            return user
           })
           // set default
           setUserList(users)
@@ -185,7 +181,6 @@ const CreateSplit = () => {
           }
         }
       }
-      console.log(key, key === 'hasServiceCharge', !splitInfo.serviceCharge)
       if (key === 'hasServiceCharge') {
         if (!splitInfo.serviceCharge) {
           isError = true
@@ -220,7 +215,7 @@ const CreateSplit = () => {
           }
         }
       }
-      console.log(newErr)
+      // console.log(newErr)
     }
     // 帳單模式
     if (tab === 'multiple') {
@@ -287,12 +282,10 @@ const CreateSplit = () => {
     }) || []
 
     records.splice(0, 0, {fields: fields})
-    console.log(records)
 
     setLoadingState(true)
     createSplitApi({records: records})
       .then((res) => {
-        console.log(res)
         setShowAlert({type: "success", text: "新增成功"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})

@@ -49,7 +49,6 @@ const CreateSplit = () => {
           [key]: `${text[key]}為空`
         }
       }
-      console.log(newErr)
     }
 
     setError(newErr)
@@ -66,12 +65,10 @@ const CreateSplit = () => {
       group: [params.groupId]
     }
 
-    console.log(fields)
 
     setLoadingState(true)
     createUserApi({fields})
       .then((res) => {
-        console.log(res)
         setShowAlert({type: "success", text: "新增成功"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
