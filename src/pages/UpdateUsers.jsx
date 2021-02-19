@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from "../components/Input"
 import Button from "../components/Button"
-import { createUserApi } from "../api/axiosApi" 
+import { updateUserApi, getUserApi, deleteUsersApi } from "../api/axiosApi" 
 import { randomNum } from "../assets/js/random"
 import { useHistory, useParams } from 'react-router-dom';
 import Alert from '../components/Alert';
 import Loading from "../components/Loading"
+import Modal from "../components/Modal"
 
-const CreateSplit = () => {
+
+const UpdateUsers = () => {
   const params = useParams()
   const history = useHistory()
   const [showAlert, setShowAlert] = useState({
     type: "",
     text: ""
   })
-  const [loadingState, setLoadingState] = useState(false)
+  const [loadingState, setLoadingState] = useState(true)
   const [userInfo, setUserInfo] = useState({
-    name: ""
+    name: "",
+    payItems: [],
+    splitItems: []
   })
   const [error, setError] = useState({
     name: false
@@ -58,10 +62,11 @@ const CreateSplit = () => {
 
   const checkInputs = async () => {
     const isError = await checkForm()
+    const {name, ...others} = userInfo
     if (isError) return
     
     let fields = {
-      ...userInfo,
+      name,
       id: `U${randomNum()}`,
       group: [params.groupId]
     }
@@ -69,10 +74,10 @@ const CreateSplit = () => {
     console.log(fields)
 
     setLoadingState(true)
-    createUserApi({fields})
+    updateUserApi(params.userId, {fields})
       .then((res) => {
         console.log(res)
-        setShowAlert({type: "success", text: "新增成功"})
+        setShowAlert({type: "success", text: "編輯成功"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
           setLoadingState(false)
@@ -81,11 +86,55 @@ const CreateSplit = () => {
       })
       .catch((err) => {
         console.log(err)
-        setShowAlert({type: "danger", text: "新增失敗，請稍後再試"})
+        setShowAlert({type: "danger", text: "編輯失敗，請稍後再試"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
           setLoadingState(false)
         }, 3000)
+      })
+  }
+
+  const getUser = async () => {
+    const userId = params.userId
+    getUserApi(userId)
+      .then(res => {
+        const fields = res.data.fields
+        const { name, payItems = [], splitItems = [] } = fields
+        console.log(fields)
+        setUserInfo({name, payItems, splitItems})
+      })
+      .catch(err => {
+
+      })
+      .finally(() => {
+        setLoadingState(false)
+      })
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  const [modalShow, setModalShow] = useState(false)
+  const toggleModal = (mShow) => {
+    setModalShow(mShow)
+  }
+
+  const deleteUsers = () => {
+    toggleModal(false)
+    setLoadingState(true)
+    deleteUsersApi(`records[]=${params.userId}`)
+      .then(res => {
+        // set default
+        setShowAlert({type: "success", text: "刪除成功"})
+        setTimeout(() => {
+          history.push(`/users/${params.groupId}`)
+        }, 3000)
+      })
+      .catch(err => {
+        console.log(err)
+        setShowAlert({type: "danger", text: "刪除失敗，請稍後再試"})
+        setLoadingState(false)
       })
   }
 
@@ -107,16 +156,26 @@ const CreateSplit = () => {
               ></Input>
               <hr className="mt-5 mb-5 filled"/>
               <div className="text-center mb-4">
-                <Button name="新增姓名" type="primary" event={checkInputs}></Button>
+                <Button name="編輯夥伴" type="primary" event={checkInputs}></Button>
               </div>
             </div>
-          
+            {
+              !userInfo.payItems.length && !userInfo.splitItems.length ? (
+                <div className="text-center pt-4">
+                  <Button name="刪除夥伴" type="danger" event={() => toggleModal(!modalShow)}></Button>
+                </div>
+              ) : '' 
+            }
           </div>
           
         ) : (
           <Loading/>
         )
       }
+      {/* Modal */}
+      <Modal event={toggleModal} mShow={modalShow} options={{persistent: false}} confirm={deleteUsers}>
+        <p>確定刪除夥伴 ?</p>
+      </Modal>
       {/* Alert */}
       {
         !showAlert.text ? "" : (
@@ -127,4 +186,4 @@ const CreateSplit = () => {
   );
 }
 
-export default CreateSplit;
+export default UpdateUsers;

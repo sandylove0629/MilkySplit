@@ -12,7 +12,7 @@ const List = ({ list, type }) => {
         <div>
           { 
             list.map((element, index) => (
-              <div className="card-list w-100 mb-4 cursor-pointer" 
+              <div className="card-list w-100 mb-4" 
                   key={index} 
               >
                 <ul>

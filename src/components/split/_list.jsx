@@ -8,8 +8,9 @@ const List = ({ list, type }) => {
   */
   const history = useHistory()
   const params = useParams()
-  const routeToUser = (userId) => {
-    history.push(`/splitUser/${params.groupId}/${userId}`)
+  const routeToUser = (id) => {
+    if (type === 1) history.push(`/splitUser/${params.groupId}/${id}`)
+    else history.push(`/editSplit/${params.groupId}/${id}`)
   }
   return (
     <div>
@@ -17,9 +18,9 @@ const List = ({ list, type }) => {
         <div>
           { 
             list.map((element) => (
-              <div className="card-list w-100 mb-4 cursor-pointer" 
+              <div className={`card-list w-100 mb-4 ${!element.total ? '' : 'cursor-pointer'}`}
                   key={element.id} 
-                  onClick={() => routeToUser(element.id)}
+                  onClick={() => {if (element.total) routeToUser(element.id)}}
               >
                 <ul>
                   <li className="py-3 px-4 d-flex justify-content-between bg-light">
