@@ -4,7 +4,7 @@ import List from "../components/users/_list";
 import Button from "../components/Button"
 import Modal from "../components/Modal"
 import { useParams, useHistory } from "react-router-dom"
-import { getUsersApi, deleteUsersApi } from "../api/axiosApi"
+import { getUsersApi, deleteUsersApi, getGroupApi, deleteSplitsApi } from "../api/axiosApi"
 import Loading from '../components/Loading';
 import Context from "../Context"
 
@@ -23,6 +23,7 @@ const Split = () => {
   useEffect(() => {
     setHeaderTitle("夥伴")
     getUsers()
+    getGroup()
     return () => setHeaderTitle()
   }, [])
 
@@ -72,6 +73,7 @@ const Split = () => {
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
           getUsers()
+          checkSplitTimes()
         }, 3000)
       })
       .catch(err => {
@@ -80,6 +82,68 @@ const Split = () => {
       })
       .finally(() => {
         setLoadingState(false)
+      })
+  }
+
+  const [groupInfo, setGroupInfo] = useState({})
+  const getGroup = () => {
+    const groupId = params.groupId
+    getGroupApi(groupId)
+      .then(res => {
+        const fields = res.data.fields
+        setGroupInfo(fields)
+      }) 
+      .catch(err => {
+
+      })
+  }
+
+  // 區分 array
+  const chunkArray = (myArray, chunk_size) => {
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+    
+    for (index = 0; index < arrayLength; index += chunk_size) {
+        let myChunk = myArray.slice(index, index+chunk_size);
+        // Do something if you want with the group
+        tempArray.push(myChunk);
+    }
+
+    return tempArray;
+  }
+
+  const checkSplitTimes = () => {
+    const newSplit = chunkArray(groupInfo.splits, 10)
+    for (let i = 0; i < newSplit.length; i++) {
+      deleteSplits(newSplit[i])
+    }
+  }
+
+  const deleteSplits = (splits) => {
+    let params = splits.map(split => {
+      return `records[]=${split}`
+    }).join('&')
+
+    deleteSplitsApi(params)
+      .then(res => {
+        // set default
+        setShowAlert({type: "success", text: "刪除成功"})
+        setSplitList(splitList.map(split => (
+          {
+            ...split, 
+            total: 0,
+            payPrice: 0,
+            splitPrice: 0
+          }
+        )))
+        setGroupInfo({
+          ...groupInfo,
+          groupPayTotal: 0
+        })
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 
@@ -121,7 +185,7 @@ const Split = () => {
       }
       {/* Modal */}
       <Modal event={toggleModal} mShow={modalShow} options={{persistent: false}} confirm={deleteUsers}>
-        <p>確定清空資料 ?</p>
+        <p>確定清空資料 ? <br/>請注意分帳項目也將會被清除</p>
       </Modal>
       {/* Alert */}
       {

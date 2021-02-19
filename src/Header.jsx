@@ -22,7 +22,7 @@ const Header = () => {
     }
   }, [])
 
-  const notShowBack = ['users', 'split', 'summary']
+  const notShowBack = ['users', 'split', 'summary', 'editGroup']
   let match = useRouteMatch("/:page/:groupId")
   const mPage = match ? match.params.page : ""
   const isMain = notShowBack.find(page => mPage === page) ? false : true
@@ -39,7 +39,7 @@ const Header = () => {
       <h1>{headerTitle ? headerTitle : "不想努力分帳了"}</h1>
       {
         accountValue.id && (
-          <div className="absolute icon-logout" onClick={doLogout}>
+          <div className="absolute icon-logout cursor-pointer" onClick={doLogout}>
             <i className="material-icons">logout</i>
           </div>
         )

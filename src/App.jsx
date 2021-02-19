@@ -3,6 +3,7 @@ import "./assets/css/style.scss"
 import Header from "./Header";
 import Split from "./pages/Split";
 import SplitUser from "./pages/SplitUser"
+import UpdateGroup from "./pages/UpdateGroup"
 import Users from "./pages/Users"
 import CreateUsers from "./pages/CreateUsers"
 import UpdateUsers from "./pages/UpdateUsers"
@@ -22,6 +23,7 @@ function App() {
           <Header />
           <main className="d-flex justify-content-center overflow-hidden">
             <Switch>
+              <Route name="editGroup" path="/editGroup/:groupId"><UpdateGroup/></Route>
               <Route name="users" path="/users/:groupId" exact><Users/></Route>
               <Route name="createUsers" path="/createUsers/:groupId"><CreateUsers/></Route>
               <Route name="updateUsers" path="/editUsers/:groupId/:userId"><UpdateUsers/></Route>

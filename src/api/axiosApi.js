@@ -63,3 +63,7 @@ export const deleteSplitsApi = params => {
 export const getSplitApi = splitId => {
   return instance.get(`${baseUrl}/split/${splitId}`)
 }
+
+export const updateGroupApi = (groupId, body) => {
+  return instance.patch(`${baseUrl}/group/${groupId}`, body)
+}
