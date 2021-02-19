@@ -53,7 +53,6 @@ const UpdateUsers = () => {
           [key]: `${text[key]}為空`
         }
       }
-      console.log(newErr)
     }
 
     setError(newErr)
@@ -71,12 +70,10 @@ const UpdateUsers = () => {
       group: [params.groupId]
     }
 
-    console.log(fields)
 
     setLoadingState(true)
     updateUserApi(params.userId, {fields})
       .then((res) => {
-        console.log(res)
         setShowAlert({type: "success", text: "編輯成功"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
@@ -100,7 +97,7 @@ const UpdateUsers = () => {
       .then(res => {
         const fields = res.data.fields
         const { name, payItems = [], splitItems = [] } = fields
-        console.log(fields)
+        // console.log(fields)
         setUserInfo({name, payItems, splitItems})
       })
       .catch(err => {

@@ -10,7 +10,7 @@ import Loading from "../components/Loading"
 const Login = () => {
   const [loadingState, setLoadingState] = useState(false)
   const history = useHistory();
-  const [account, setAccount] = useState("sandylove0629")
+  const [account, setAccount] = useState("")
   const [error, setError] = useState({
     account: ""
   })
@@ -20,7 +20,6 @@ const Login = () => {
     fetchCreateGroup,
     setAccountValue, 
     setGroupValue, 
-    account: accountValue,
     group,
     getGroup
   } = useContext(Context)
@@ -46,9 +45,7 @@ const Login = () => {
     setLoadingState(true)
     fetchLogin(account)
       .then(res => {
-        console.log(res)
         // 取得 group
-        console.log(res)
         const groupId = res.fields.groups[0]
         getGroupInfo(groupId)
       })
@@ -74,7 +71,6 @@ const Login = () => {
     }
     fetchRegister(accountBody)
       .then(res => {
-        console.log(res)
         doCreateGroup(res.data.id)
       })
       .catch(err => {
@@ -94,7 +90,6 @@ const Login = () => {
     }
     fetchCreateGroup(groupBody)
       .then(res => {
-        console.log(res)
         // 跳頁
         routeUserPage()
       })
@@ -106,7 +101,6 @@ const Login = () => {
   const getGroupInfo = (id) => {
     getGroup(id)
       .then(res => {
-        console.log(res)
         // 跳頁
         routeSplitPage()
       })
@@ -140,6 +134,7 @@ const Login = () => {
                 option={{ title: "帳號", key: "account" }}
                 value={account}
                 handleChange={value => setAccount(value)}
+                error={error.account}
               ></Input>
             </div>
             <div className="w-100">
