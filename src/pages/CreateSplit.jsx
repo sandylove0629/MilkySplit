@@ -322,11 +322,11 @@ const CreateSplit = () => {
             {/* tab */}
             <div className="d-flex tab-block mb-4">
               <div 
-                className={`flex-grow-1 text-center ${tab === 'single' ? 'active': ''}`}
+                className={`cursor-pointer flex-grow-1 text-center ${tab === 'single' ? 'active': ''}`}
                 onClick={() => setTab('single')}
               >單項模式</div>
               <div 
-                className={`flex-grow-1 text-center ${tab === 'multiple' ? 'active': ''}`}
+                className={`cursor-pointer flex-grow-1 text-center ${tab === 'multiple' ? 'active': ''}`}
                 onClick={() => setTab('multiple')}
               >帳單模式</div>
             </div>
