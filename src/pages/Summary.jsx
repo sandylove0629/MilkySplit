@@ -50,11 +50,13 @@ const Split = () => {
               userId: fields.users[i],
               id: fields.users[i],
               name: fields.usersName[i],
-              total: Math.ceil(fields.usersTotal[i]),
+              total: fields.usersTotal[i] >= 0 ? Math.ceil(fields.usersTotal[i]) : Math.floor(fields.usersTotal[i])
             }
           ]
+          console.log(fields.usersTotal[i] >= 0 ? Math.ceil(fields.usersTotal[i]) : Math.floor(fields.usersTotal[i]))
         }
         setSplitList(list)
+        console.log(JSON.stringify(list))
       }) 
       .catch(err => {
 
@@ -86,7 +88,7 @@ const Split = () => {
           receiveUser.total = receiveUser.total - payUserTotal
           payUser.total = 0
         } 
-        else if (receiveUser.total < payUserTotal) {
+        else if (receiveUser.total <= payUserTotal) {
           result = [
             ...result,
             {
@@ -102,61 +104,6 @@ const Split = () => {
     }
     setSummaryList(result)
     console.log(result)
-  }
-
-  const toggleModal = (mShow) => {
-    setModalShow(mShow)
-  }
-
-  const [usersModalShow, setUsersModalShow] = useState(false)
-  const toggleUsersModal = (mShow) => {
-    setUsersModalShow(mShow)
-  }
-
-  const checkUsers = () => {
-    console.log(splitList.length)
-    if (!splitList.length) {
-      setUsersModalShow(true)
-      return
-    }
-    history.push(`/createSplit/${params.groupId}`)
-  }
-
-  const deleteSplits = () => {
-    toggleModal(false)
-    console.log(groupInfo.splits)
-    let params = groupInfo.splits.map(split => {
-      return `records[]=${split}`
-    }).join('&')
-
-    setLoadingState(true)
-    deleteSplitsApi(params)
-      .then(res => {
-        // set default
-        setShowAlert({type: "success", text: "刪除成功"})
-        setSplitList(splitList.map(split => (
-          {
-            ...split, 
-            total: 0,
-            payPrice: 0,
-            splitPrice: 0
-          }
-        )))
-        setGroupInfo({
-          ...groupInfo,
-          groupPayTotal: 0
-        })
-        setTimeout(() => {
-          setShowAlert({type: "", text: ""})
-          getGroup()
-        }, 3000)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        setLoadingState(false)
-      })
   }
 
   return (

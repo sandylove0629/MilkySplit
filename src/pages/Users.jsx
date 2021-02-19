@@ -75,6 +75,7 @@ const Split = () => {
         }, 3000)
       })
       .catch(err => {
+        setShowAlert({type: "danger", text: "刪除失敗，請稍後再試"})
         console.log(err)
       })
       .finally(() => {
@@ -92,7 +93,7 @@ const Split = () => {
       <div 
         className="absolute rounded-circle text-white icon-add
         d-flex flex-wrap justify-content-center align-items-center"
-        onClick={ () => history.push(`/createUser/${params.groupId}`)  }
+        onClick={ () => history.push(`/createUsers/${params.groupId}`)  }
       >
         <i className="material-icons">add</i>
       </div>

@@ -1,8 +1,9 @@
 import React, {useContext, useEffect} from 'react';
-import { useHistory } from "react-router-dom"
+import { useHistory, useRouteMatch } from "react-router-dom"
 import Context from "./Context"
 
 const Header = () => {
+  
   const history = useHistory()
   const { account: accountValue, setAccountValue, setGroupValue, headerTitle }  = useContext(Context)
   const doLogout = () => {
@@ -21,14 +22,20 @@ const Header = () => {
     }
   }, [])
 
+  const notShowBack = ['users', 'split', 'summary']
+  let match = useRouteMatch("/:page/:groupId")
+  const mPage = match ? match.params.page : ""
+  const isMain = notShowBack.find(page => mPage === page) ? false : true
+  
   return (
     <header className="d-flex justify-content-center align-items-center flex-wrap">
       {
-        
+        isMain && match && (
+          <div className="absolute icon-back cursor-pointer" onClick={() => history.goBack()}>
+            <i className="material-icons">navigate_before</i>
+          </div>
+        )
       }
-      <div className="absolute icon-back" onClick={() => history.goBack()}>
-        <i className="material-icons">navigate_before</i>
-      </div>
       <h1>{headerTitle ? headerTitle : "不想努力分帳了"}</h1>
       {
         accountValue.id && (

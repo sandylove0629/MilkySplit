@@ -36,6 +36,10 @@ export const getUserApi = userId => {
   return instance.get(`${baseUrl}/user/${userId}`)
 }
 
+export const updateUserApi = (userId, body) => {
+  return instance.patch(`${baseUrl}/user/${userId}`, body)
+}
+
 export const createUserApi = body => {
   return instance.post(`${baseUrl}/user`, body)
 }
@@ -48,6 +52,14 @@ export const createSplitApi = body => {
   return instance.post(`${baseUrl}/split`, body)
 }
 
+export const updateSplitApi = (splitId, body) => {
+  return instance.patch(`${baseUrl}/split/${splitId}`, body)
+}
+
 export const deleteSplitsApi = params => {
   return instance.delete(`${baseUrl}/split?${params}`)
+}
+
+export const getSplitApi = splitId => {
+  return instance.get(`${baseUrl}/split/${splitId}`)
 }
