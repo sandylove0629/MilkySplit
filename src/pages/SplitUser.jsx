@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SummaryCard from "../components/SummaryBlock"
 import List from "../components/splitUser/_list";
-import Button from "../components/Button"
-import Modal from "../components/Modal"
-import { useParams, useHistory } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { getUserApi } from "../api/axiosApi"
 import Loading from '../components/Loading';
 import Context from "../Context"
@@ -11,10 +9,8 @@ import Context from "../Context"
 const SplitUser = () => {
   const [payList, setPayList] = useState([]) // 支付列表
   const [splitList, setSplitList] = useState([]) // 分帳列表
-  const [modalShow, setModalShow] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const params = useParams()
-  const history = useHistory()
   const { setHeaderTitle } = useContext(Context)
 
   const getUser = async () => {
@@ -22,7 +18,7 @@ const SplitUser = () => {
     getUserApi(userId)
       .then(res => {
         const fields = res.data.fields
-        console.log(fields)
+        // console.log(fields)
         setUserInfo(fields)
         setHeaderTitle(fields.name)
 
@@ -62,10 +58,6 @@ const SplitUser = () => {
       .catch(err => {
 
       })
-  }
-
-  const toggleModal = (mShow) => {
-    setModalShow(mShow)
   }
 
   useEffect(() => {

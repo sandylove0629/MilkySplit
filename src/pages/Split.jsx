@@ -40,14 +40,13 @@ const Split = () => {
     getGroupApi(groupId)
       .then(res => {
         const fields = res.data.fields
-        console.log(fields)
+        // console.log(fields)
         setGroupInfo(fields)
         setHeaderTitle(fields.name || '不想努力分帳了')
 
         // 建立分帳列表
         let list = []
         let itemList = []
-        console.log(fields.users)
         for (let i = 0; i < fields.users.length; i++) {
           list = [
             ...list,
@@ -91,7 +90,6 @@ const Split = () => {
   }
 
   const checkUsers = () => {
-    console.log(splitList.length)
     if (!splitList.length) {
       setUsersModalShow(true)
       return

@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import Input from "../components/Input"
 import Button from "../components/Button"
 import { updateGroupApi, getGroupApi } from "../api/axiosApi" 
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Alert from '../components/Alert';
 import Loading from "../components/Loading"
 import Context from "../Context"
 
 const CreateSplit = () => {
   const params = useParams()
-  const history = useHistory()
   const [showAlert, setShowAlert] = useState({
     type: "",
     text: ""
@@ -32,29 +31,6 @@ const CreateSplit = () => {
       [key]: false
     })
   };
-
-  // check inputs
-  const checkForm = async () => {
-    // 一般 / 帳單 皆檢查
-    let isError = false
-    const text = {
-      name: "姓名"
-    }
-    let newErr = {...error}
-    for (let key in groupInfo) {
-      if (!groupInfo[key]) {
-        isError = true
-        newErr = {
-          ...newErr,
-          [key]: `${text[key]}為空`
-        }
-      }
-      console.log(newErr)
-    }
-
-    setError(newErr)
-    return isError
-  }
 
   const checkInputs = async () => {
     let fields = {

@@ -123,6 +123,7 @@ ul {
 }
 
 .icon-add {
+  position: fixed !important;
   z-index: 1;
   right: 20px;
   bottom: 80px;
@@ -300,11 +301,14 @@ hr.filled {
 
 // header
 header {
+  position: fixed;
+  width: 100vw;
   padding: 15px;
   text-align: center;
   color: white;
   background-color: $primary;
   height: 70px;
+  z-index: 2;
 }
 
 .icon-back {
@@ -322,7 +326,8 @@ header {
 
 // content
 main {
-  height: calc(100vh - 150px);
+  padding-top: 70px;
+  height: calc(100vh - 70px);
   overflow: scroll;
 }
 
