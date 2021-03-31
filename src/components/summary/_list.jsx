@@ -16,7 +16,7 @@ const List = ({ list, type }) => {
                   key={index} 
               >
                 <ul>
-                  <li className="py-3 px-4 d-flex justify-content-between bg-light">
+                  <li className="p-3 d-flex justify-content-between bg-light">
                     <div>
                       <p>{element.payUser}</p>
                       <p>

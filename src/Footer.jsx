@@ -7,7 +7,6 @@ const Footer = () => {
   const params = match ? match.params : { page: "" }
   
   const routeTo = (path) => {
-    console.log(`${path}/${params.groupId}`)
     history.push(`${path}/${params.groupId}`)
   }
 

@@ -21,7 +21,7 @@ const List = ({ list, type }) => {
               { 
                 list.map((element) => (
                   <li 
-                    className="py-3 px-4 d-flex justify-content-between border-bottom border-light cursor-pointer"
+                    className="p-3 d-flex justify-content-between border-bottom border-light cursor-pointer"
                     key={element.id} 
                     onClick={() => routeToUser(element.id)}
                   >

@@ -18,7 +18,7 @@ const List = ({ list, type, amount }) => {
           <li>
               {
                 type === 1 ? (
-                  <div className="py-3 px-4 d-flex justify-content-between bg-light">
+                  <div className="p-3 d-flex justify-content-between bg-light">
                     <p>
                       <i className="material-icons t-5 pr-2">outbox</i>
                       花費
@@ -26,7 +26,7 @@ const List = ({ list, type, amount }) => {
                     { amount && <p>{parseFloat(amount.toFixed(2))}</p> }
                   </div>
                 ) : (
-                  <div className="py-3 px-4 d-flex justify-content-between bg-light">
+                  <div className="p-3 d-flex justify-content-between bg-light">
                     <p>
                       <i className="material-icons t-5 pr-2">move_to_inbox</i>
                       受益
@@ -42,7 +42,7 @@ const List = ({ list, type, amount }) => {
                 className="cursor-pointer"
                 onClick={() => routeToSplit(element.id)}
               >
-                <div className="py-3 px-4 d-flex justify-content-between">
+                <div className="p-3 d-flex justify-content-between">
                   <p>
                     <i className="material-icons t-4 pr-2">subdirectory_arrow_right</i>
                     {element.name}

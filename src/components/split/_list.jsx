@@ -23,21 +23,21 @@ const List = ({ list, type }) => {
                   onClick={() => {if (element.total) routeToUser(element.id)}}
               >
                 <ul>
-                  <li className="py-3 px-4 d-flex justify-content-between bg-light">
+                  <li className="p-3 d-flex justify-content-between bg-light">
                     <p>{element.name}</p>
                     {element.total && <p>{parseFloat(element.total.toFixed(2))}</p>}
                   </li>
                   {
                     type === 1 && (
                       <ul>
-                        <li className="py-3 px-4 d-flex justify-content-between border-bottom border-light">
+                        <li className="p-3 d-flex justify-content-between border-bottom border-light">
                           <p>
                             <i className="material-icons t-5 pr-2">outbox</i>
                             花費
                           </p>
                           <p>{element.payPrice ? parseFloat(element.payPrice.toFixed(2)) : 0}</p>
                         </li>
-                        <li className="py-3 px-4 d-flex justify-content-between border-bottom border-light">
+                        <li className="p-3 d-flex justify-content-between border-bottom border-light">
                           <p>
                             <i className="material-icons t-5 pr-2">move_to_inbox</i>
                             受益
@@ -52,7 +52,7 @@ const List = ({ list, type }) => {
                     <ul>
                       {
                         element.details.map((detail) => (
-                          <li className="py-3 px-4 d-flex justify-content-between" key={detail.id}>
+                          <li className="p-3 d-flex justify-content-between" key={detail.id}>
                             <p>
                               <i className="material-icons t-4 pr-2">subdirectory_arrow_right</i>
                               {detail.name}

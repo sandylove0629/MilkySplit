@@ -83,10 +83,7 @@ const UpdateSplit = () => {
           })
           // set default
           setUserList(users)
-          setSplitInfo({
-            ...splitInfo,
-            splitPeople: users
-          })
+          getSplit(users)
         })
         .catch(err => {
           console.log(err)
@@ -164,31 +161,35 @@ const UpdateSplit = () => {
     return isError
   }
   
-  const getSplit = () => {
+  const getSplit = (users) => {
     const id = params.splitId
-    getSplitApi(id)
-      .then(res => {
-        const fields = res.data.fields
-        setSplitInfo({
-          title: fields.title,
-          memo: fields.memo || "",
-          payPerson: userList.find(user => user.value === fields.payPerson[0]),
-          splitPeople: fields.splitPeople.map(splitUser => {
-            return userList.find(user => user.value === splitUser)
-          }),
-          price: fields.price,
-          hasServiceCharge: fields.serviceCharge ? true : false,
-          serviceCharge: fields.serviceCharge * 100
+    return new Promise ((resolve, reject) => {
+      getSplitApi(id)
+        .then(res => {
+          const fields = res.data.fields
+          setSplitInfo({
+            title: fields.title,
+            memo: fields.memo || "",
+            payPerson: users.find(user => user.value === fields.payPerson[0]),
+            splitPeople: fields.splitPeople.map(splitUser => {
+              return users.find(user => user.value === splitUser)
+            }),
+            price: fields.price,
+            hasServiceCharge: fields.serviceCharge ? true : false,
+            serviceCharge: fields.serviceCharge * 100
+          })
+          resolve()
         })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoadingState(false)
-        }, 1000)
-      })
+        .catch(err => {
+          console.log(err)
+          reject()
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setLoadingState(false)
+          }, 1000)
+        })
+    })
   }
 
   const checkInputs = async () => {
@@ -233,10 +234,6 @@ const UpdateSplit = () => {
   useEffect(() => {
     getUsers()
   }, [])
-
-  useEffect(() => {
-    getSplit()
-  }, [userList])
 
   const [modalShow, setModalShow] = useState(false)
   const toggleModal = (mShow) => {
