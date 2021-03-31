@@ -36,11 +36,6 @@ const CreateSplit = () => {
     itemList: []
   })
 
-  // Select
-  const styles = {
-    control: css => ({ ...css, paddingLeft: '1rem' })
-  }
-
   const handleChange = (value, key, index) => {
     if (typeof index !== "undefined") {
       let newItemList = [...itemList]
@@ -84,10 +79,10 @@ const CreateSplit = () => {
       ...error,
       [key]: false
     })
-    console.log(splitInfo)
+    // console.log(splitInfo)
   }
   const handleCheck = (value, key) => {
-    console.log(value)
+    // console.log(value)
     setSplitInfo({
       ...splitInfo,
       [key]: value
@@ -103,7 +98,7 @@ const CreateSplit = () => {
       const id = JSON.parse(sGroupId).fields.id
       getUsersApi(id)
         .then(res => {
-          res.data.records.map((user) => {
+          res.data.records.map(user => {
             users = [
               ...users,
               {
@@ -111,6 +106,7 @@ const CreateSplit = () => {
                 label: user.fields.name
               }
             ]
+            return user
           })
           // set default
           setUserList(users)
@@ -185,7 +181,6 @@ const CreateSplit = () => {
           }
         }
       }
-      console.log(key, key === 'hasServiceCharge', !splitInfo.serviceCharge)
       if (key === 'hasServiceCharge') {
         if (!splitInfo.serviceCharge) {
           isError = true
@@ -220,7 +215,7 @@ const CreateSplit = () => {
           }
         }
       }
-      console.log(newErr)
+      // console.log(newErr)
     }
     // 帳單模式
     if (tab === 'multiple') {
@@ -287,12 +282,10 @@ const CreateSplit = () => {
     }) || []
 
     records.splice(0, 0, {fields: fields})
-    console.log(records)
 
     setLoadingState(true)
     createSplitApi({records: records})
       .then((res) => {
-        console.log(res)
         setShowAlert({type: "success", text: "新增成功"})
         setTimeout(() => {
           setShowAlert({type: "", text: ""})
@@ -322,11 +315,11 @@ const CreateSplit = () => {
             {/* tab */}
             <div className="d-flex tab-block mb-4">
               <div 
-                className={`flex-grow-1 text-center ${tab === 'single' ? 'active': ''}`}
+                className={`cursor-pointer flex-grow-1 text-center ${tab === 'single' ? 'active': ''}`}
                 onClick={() => setTab('single')}
               >單項模式</div>
               <div 
-                className={`flex-grow-1 text-center ${tab === 'multiple' ? 'active': ''}`}
+                className={`cursor-pointer flex-grow-1 text-center ${tab === 'multiple' ? 'active': ''}`}
                 onClick={() => setTab('multiple')}
               >帳單模式</div>
             </div>
@@ -425,7 +418,7 @@ const CreateSplit = () => {
                     {/* 新增項目按鈕 */}
                     <div 
                       className="absolute rounded-circle text-white icon-add-item
-                      d-flex flex-wrap justify-content-center align-content-center"
+                      d-flex flex-wrap justify-content-center align-items-center"
                       onClick={addItem}
                     >
                       <i className="material-icons">add</i>

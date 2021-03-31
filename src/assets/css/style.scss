@@ -4,6 +4,7 @@ $info: #373737;
 $light-gray: #C7C7C7;
 $danger: #9E7073;
 $md: 560px;
+$header-height: 50px;
 
 body, html {
  margin: 0;
@@ -57,7 +58,7 @@ ul {
 }
 
 .pb-100 {
-  padding-bottom: 100px;
+  padding-bottom: 100px !important;
 }
 
 .t-4 {
@@ -76,6 +77,10 @@ ul {
 
 .overflow-scroll::-webkit-scrollbar {
   display: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .modal {
@@ -119,14 +124,16 @@ ul {
 }
 
 .icon-add {
+  position: fixed !important;
   z-index: 1;
   right: 20px;
-  bottom: 20px;
-  width: 50px;
-  height: 50px;
+  bottom: 80px;
+  width: 45px;
+  height: 45px;
   background-color: $primary;
+  cursor: pointer;
   i {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
   }
 }
@@ -289,27 +296,33 @@ hr.filled {
 }
 
 // main
+main {
+  min-height: calc(100vh - 50px);
+}
 .absolute {
   position: absolute;
 }
 
 // header
 header {
-  padding: 15px;
+  position: fixed;
+  width: 100vw;
+  padding: 8px 15px;
   text-align: center;
   color: white;
   background-color: $primary;
-  height: 70px;
+  height: $header-height;
+  z-index: 2;
 }
 
 .icon-back {
   left: 25px;
-  top: 25px;
+  top: 15px;
 }
 
 .icon-logout {
   right: 25px;
-  top: 25px;
+  top: 17px;
   i {
     font-size: 18px;
   }
@@ -317,7 +330,8 @@ header {
 
 // content
 main {
-  height: calc(100vh - 150px);
+  padding-top: $header-height;
+  height: calc(100vh - $header-height);
   overflow: scroll;
 }
 
@@ -351,9 +365,9 @@ main {
 
 .tab-block {
   div {
-    padding: 15px;
+    padding: 10px;
     background-color: $light-gray;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #ffffff;
   }
@@ -372,8 +386,9 @@ main {
 
 // footer
 footer {
-  padding: 25px 10px;
+  padding: 15px 10px;
   text-align: center;
   color: $info;
-  height: 80px;
+  height: 55px;
+  background-color: #F9F9F9;
 }

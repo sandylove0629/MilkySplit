@@ -9,7 +9,7 @@ const List = ({ list, type }) => {
   const history = useHistory()
   const params = useParams()
   const routeToUser = (userId) => {
-    // history.push(`/editUser/${params.groupId}/${userId}`)
+    history.push(`/editUsers/${params.groupId}/${userId}`)
   }
   return (
     <div>
@@ -21,7 +21,7 @@ const List = ({ list, type }) => {
               { 
                 list.map((element) => (
                   <li 
-                    className="py-3 px-4 d-flex justify-content-between bg-light border-bottom border-light"
+                    className="p-3 d-flex justify-content-between border-bottom border-light cursor-pointer"
                     key={element.id} 
                     onClick={() => routeToUser(element.id)}
                   >

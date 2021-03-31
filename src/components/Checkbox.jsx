@@ -1,6 +1,6 @@
 import React from "react";
 const Checkbox = ({ option, value, handleCheck }) => {
-  const { title, placeholder, type, key, required } = option;
+  const { title, key } = option;
 
   return (
     <div className="mb-3">
