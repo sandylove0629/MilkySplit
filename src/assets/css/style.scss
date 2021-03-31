@@ -331,7 +331,7 @@ header {
 // content
 main {
   padding-top: $header-height;
-  height: calc(100vh - $header-height);
+  height: calc(100vh - 50px);
   overflow: scroll;
 }
 
