@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Input from "../components/Input"
 import Select from "../components/Select"
 import Checkbox from "../components/Checkbox"
@@ -9,10 +9,12 @@ import { useHistory, useParams } from 'react-router-dom';
 import Alert from '../components/Alert';
 import Loading from "../components/Loading"
 import Modal from "../components/Modal"
+import Context from "../Context"
 
 const UpdateSplit = () => {
   const params = useParams()
   const history = useHistory()
+  const { getGroup } = useContext(Context)
   const [showAlert, setShowAlert] = useState({
     type: "",
     text: ""
@@ -89,7 +91,6 @@ const UpdateSplit = () => {
           console.log(err)
         })
     }
-    
   }
 
   // check inputs
@@ -231,7 +232,8 @@ const UpdateSplit = () => {
       })
   }
 
-  useEffect(() => {
+  useEffect(async () => {
+    if (!localStorage.getItem("split_group")) await getGroup(params.groupId)
     getUsers()
   }, [])
 
