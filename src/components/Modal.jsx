@@ -16,7 +16,7 @@ const Modal = ({ title, btnName, mShow, event, options = {}, children, confirm }
 
   // 內層往上傳
   useEffect(() => {
-    event(modalShow)
+    if (event) event(modalShow)
   }, [modalShow])
 
   const doConfirm = () => {
