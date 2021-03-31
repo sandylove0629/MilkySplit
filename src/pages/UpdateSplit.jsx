@@ -122,7 +122,7 @@ const UpdateSplit = () => {
           }
         }
       }
-      if (key === 'hasServiceCharge') {
+      if (key === 'hasServiceCharge' && splitInfo.hasServiceCharge) {
         if (!splitInfo.serviceCharge) {
           isError = true
           newErr = {
@@ -317,7 +317,7 @@ const UpdateSplit = () => {
               </div>
               <hr className="mt-5 mb-5 filled"/>
               <div className="text-center mb-4">
-                <Button name="編輯項目" type="primary" event={checkInputs}></Button>
+                <Button name="編輯項目" type="primary" event={() => checkInputs()}></Button>
               </div>
             </div>
             <div className="text-center pt-4">
