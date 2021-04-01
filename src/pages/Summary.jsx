@@ -67,6 +67,7 @@ const Split = () => {
           result = [
             ...result,
             {
+              receiveUserId: receiveUser.id,
               receiveUser: receiveUser.name,
               payUser: payUser.name,
               money: payUserTotal
@@ -79,6 +80,7 @@ const Split = () => {
           result = [
             ...result,
             {
+              receiveUserId: receiveUser.id,
               receiveUser: receiveUser.name,
               payUser: payUser.name,
               money: receiveUser.total

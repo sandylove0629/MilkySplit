@@ -14,6 +14,7 @@ import Summary from "./pages/Summary";
 import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom"
 import { UserProvider } from "./Context"
 import CreateSplit from "./pages/CreateSplit";
+import PaymentMethod from "./pages/PaymentMethod";
 function App() {
   const FooterWithRouter = withRouter(Footer)
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route name="createSplit" path="/createSplit/:groupId"><CreateSplit/></Route>
               <Route name="updateSplit" path="/editSplit/:groupId/:splitId"><UpdateSplit/></Route>
               <Route name="summary" path="/summary/:groupId"><Summary/></Route>
+              <Route name="paymentMethod" path="/paymentMethod/:groupId/:codeId"><PaymentMethod/></Route>
               <Route name="home" path="/"><Login/></Route>
             </Switch>
           </main>
