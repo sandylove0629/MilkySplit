@@ -50,6 +50,14 @@ ul {
   color: $light-gray;
 }
 
+.text-break {
+  word-break: break-all;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 .text-12 {
   font-size: 12px;
 }
@@ -287,7 +295,6 @@ hr.filled {
   border: none;
   height: $header-height;
   font-size: 18px;
-  line-height: 45px;
   text-align: center;
   &.alert-success {
     background-color: #556b70;
