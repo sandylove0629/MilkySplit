@@ -67,3 +67,7 @@ export const getSplitApi = splitId => {
 export const updateGroupApi = (groupId, body) => {
   return instance.patch(`${baseUrl}/group/${groupId}`, body)
 }
+
+export const getPaymentMethodApi = paymentMethodId => {
+  return instance.get(`${baseUrl}/qrcode/${paymentMethodId}`)
+}
